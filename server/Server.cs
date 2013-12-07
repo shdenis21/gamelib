@@ -38,6 +38,7 @@ namespace gamelib.Server
 		private IAuthen _auth;
         private Thread _newThread;
         private TcpListener _listner;
+		
         public List<Connection> _connectios; //Список соединений
         public int Port { get; set; }
         public bool Started { get; private set; }
