@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E407B10D-4865-462D-BE43-73C211F22D5B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>gamelib</RootNamespace>
+    <AssemblyName>gamelib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="common\Connection.cs" />
+    <Compile Include="common\InputProcessor.cs" />
+    <Compile Include="common\IPacket.cs" />
+    <Compile Include="common\OutputProccessor.cs" />
+    <Compile Include="common\PacketBase.cs" />
+    <Compile Include="common\PacketHandlerBase.cs" />
+    <Compile Include="common\PacketHandlerStorage.cs" />
+    <Compile Include="server\ClientContext.cs" />
+    <Compile Include="server\ServerHandlersV1.cs" />
+    <Compile Include="server\Server.cs" />
+    <Compile Include="Client\ClientHandlersV1.cs" />
+    <Compile Include="Client\Client.cs" />
+    <Compile Include="math\Vector3.cs" />
+    <Compile Include="common\IAuthen.cs" />
+    <Compile Include="common\AfterConnected.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="common\" />
+    <Folder Include="server\" />
+    <Folder Include="Client\" />
+    <Folder Include="math\" />
+    <Folder Include="unity\" />
+  </ItemGroup>
+</Project>
