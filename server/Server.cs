@@ -25,7 +25,7 @@ namespace gamelib.Server
 	/// <param name='auth'>
 	/// Auth.
 	/// </param>
-		public Server(int port, ContextFactory contextFactory, IAuthen _auth, AfterConnected afterconn)
+		public Server(int port, ClientContextFactory contextFactory, IAuthen _auth, AfterConnected afterconn)
         {
 			this._aftercon = afterconn;
 			this._auth = _auth;
@@ -57,8 +57,9 @@ namespace gamelib.Server
 			
                 Connection connection = new Connection(client, this.Handlers, this._auth, this._aftercon);
                 connection.Context = this._contextFactory.MakeContext(connection);
-                connection.Run();
-                this._connectios.Add(connection);
+            this._connectios.Add(connection);
+			int SesionId = 	this._connectios.IndexOf(connection);
+                connection.RunServerProtocolClient(SesionId);
             }
         }
 

@@ -26,6 +26,7 @@ namespace gamelib.Common
 
         private void _handlePacket()
         {
+			
             int id = Reader.ReadInt32(); //Читаем id пакета
             PacketHandlerBase handler = this.Handlers.GetHandlerById(id); //Получаем обработчик
             handler.Reader = this.Reader;

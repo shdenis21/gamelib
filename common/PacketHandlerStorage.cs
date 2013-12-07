@@ -8,16 +8,16 @@ namespace gamelib.Common
 	{
 		public PacketHandlerStorage() { this._storage = new Dictionary<int, PacketHandlerBase>(); }
 
-        private Dictionary<int, PacketHandlerBase> _storage;
+        public Dictionary<int, PacketHandlerBase> _storage;
         public PacketHandlerBase GetHandlerById(int id)
         {
             PacketHandlerBase x = this._storage[id];
             return (PacketHandlerBase)x.Clone(); //Вот тут то и пригодился метод Clone
         }
 		
-        public void AddHandler(int id, PacketHandlerBase handler)
+        public void AddHandler(int idhandler, PacketHandlerBase handler)
         {
-            this._storage.Add(id, handler);
+            this._storage.Add(idhandler, handler);
         }
 	}
 }

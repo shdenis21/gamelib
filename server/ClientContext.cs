@@ -8,9 +8,9 @@ namespace gamelib.Server
 	public class ClientContext
 	{
 		
-		public ClientContext(Connect connection) { this.Connection = connection; }
+		public ClientContext(Connection connection) { this.Connection = connection; }
 
-        public Connect Connection { get; set; }
+        public Connection Connection { get; set; }
 	}
 	
 	
@@ -21,7 +21,7 @@ namespace gamelib.Server
     {
 		
 		
-        public object MakeContext(Connect connection)
+        public object MakeContext(Connection connection)
         {
             return new ClientContext(connection);
         }
@@ -31,7 +31,7 @@ namespace gamelib.Server
 	/// </summary>
 	interface ContextFactory
 	{
-		object MakeContext(Connect connection);
+		object MakeContext(Connection connection);
 	}
 	
 	

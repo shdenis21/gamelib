@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 namespace gamelib.Common
 {
 	/// <summary>
@@ -25,8 +26,13 @@ namespace gamelib.Common
 			this._auth = auth;
             this._client = client;
             this.Stream = this._client.GetStream();
-            this._inputProccessor = new InputProcessor(this.Stream, this, handlers);
+			//проверка кто сервер а кто клиент 
+			if(handlers != null)
+			{
+				
             this._outputProccessor = new OutputProccessor(this.Stream);
+            this._inputProccessor = new InputProcessor(this.Stream, this, handlers);
+			}
 			this._reader = new BinaryReader(this.Stream);
 			this._writer = new BinaryWriter(this.Stream);
         }
@@ -39,22 +45,56 @@ namespace gamelib.Common
         private OutputProccessor _outputProccessor; //Объект класса записи пакетов
         public NetworkStream Stream { get; private set; }
         public object Context { get; set; }
+		bool s = false;
+		public int SesionClient;
 		/// <summary>
-		/// Run this instance.
+		/// Runs the server protocol client.
 		/// </summary>
-        public void Run()
-        {
+		/// <param name='SesionId'>
+		/// Sesion identifier.
+		/// </param>
+        public void RunServerProtocolClient(int SesionId)
+        {bool s = false;
 			// авторизация
 			if(this._auth != null)
 			{ 
 					while(s==false) 
-					{ if(this._auth._Authen(reader,writer) == true)
-						{s= true;} 
+					{ if(this._auth._Authen(this._reader,this._writer) == true)
+						{
+							s= true;
+							_writer.Write(SesionId);
+						} 
 						else s= false;
 					}
 			}
 			//перед запуском обработчиков
 		this._aftercon.Run(_reader,_writer);
+			// запуск потоков 
+            this._inputProccessor.Run();
+            this._outputProccessor.Run();
+        }
+		
+		/// <summary>
+		/// Runs the client.
+		/// </summary>
+		//запуск клиента
+	 public void RunClient(List<prefabid> _remotesprototypes)
+        { 
+			// авторизация
+			if(this._auth != null)
+			{ 
+					while(s==false) 
+					{ if(this._auth._Authen(this._reader,this._writer) == true)
+						{
+							s= true;
+							SesionClient = this._reader.ReadInt32();
+						} 
+						else s= false;
+					}
+			}
+			
+			//перед запуском обработчиков
+			this._aftercon.Run(_reader,_writer);
 			// запуск потоков 
             this._inputProccessor.Run();
             this._outputProccessor.Run();
@@ -80,6 +120,13 @@ namespace gamelib.Common
             handler.Context = this.Context;
             handler.Handle();
         }
+			
+	
+	
+		public class prefabid
+		{
+			public GameObject  PrefabOwner;
+		}
 	}
 }
 
